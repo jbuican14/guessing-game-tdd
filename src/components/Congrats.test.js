@@ -5,23 +5,25 @@ import Congrats from "./Congrats";
 import checkPropTypes from "check-prop-types";
 import {checkProps} from "../util/util";
 
+const defaultProps = {success: false};
 /**
  * Description : @function setup
  * @param {object} props={}
  * @returns {JSX component}
  */
 const setup = (props = {}) => {
-  return render(<Congrats {...props} />);
+  const setupProps = {...defaultProps, ...props};
+  return render(<Congrats {...setupProps} />);
 };
 
 test("loads without error", () => {
-  setup({success: true});
+  setup();
   const elm = screen.getByTestId("congrats-element");
   expect(elm).toBeInTheDocument();
 });
 
 test('renders no text when "success" prop is false', () => {
-  setup({success: false});
+  setup();
   const elm = screen.getByTestId("congrats-element");
   expect(elm).toBeEmptyDOMElement();
 });
