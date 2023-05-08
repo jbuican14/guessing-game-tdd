@@ -1,6 +1,9 @@
 import {render, screen} from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Congrats from "./Congrats";
+// import { checkPropTypes } from 'prop-types';
+import checkPropTypes from "check-prop-types";
+import {checkProps} from "../util/util";
 
 /**
  * Description : @function setup
@@ -12,7 +15,7 @@ const setup = (props = {}) => {
 };
 
 test("loads without error", () => {
-  setup();
+  setup({success: true});
   const elm = screen.getByTestId("congrats-element");
   expect(elm).toBeInTheDocument();
 });
@@ -27,4 +30,9 @@ test("renders non-empty congrats message when success prop is true", () => {
   setup({success: true});
   const message = screen.getByTestId("congrats-element");
   expect(message).not.toBeEmptyDOMElement();
+});
+
+test("does not throw warning with expected props", () => {
+  const expectedProps = {success: false};
+  checkProps(Congrats, expectedProps);
 });
